@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Consultation Booking</title>
+<style>
+body{
+font-family: Arial;
+text-align:center;
+background:#f2f2f2;
+}
+
+.container{
+background:white;
+padding:20px;
+margin:auto;
+margin-top:50px;
+width:300px;
+border-radius:10px;
+box-shadow:0 0 10px gray;
+}
+
+input,button{
+width:90%;
+padding:10px;
+margin:10px;
+}
+
+button{
+background:blue;
+color:white;
+border:none;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Book Consultation</h2>
+
+<input type="text" id="name" placeholder="Your Name">
+<input type="email" id="email" placeholder="Your Email">
+<input type="date" id="date">
+
+<button onclick="book()">Book Consultation</button>
+
+<p id="msg"></p>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+databaseURL: "YOUR_DATABASE_URL",
+projectId: "YOUR_PROJECT_ID",
+storageBucket: "YOUR_PROJECT.appspot.com",
+messagingSenderId: "XXXX",
+appId: "XXXX"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.book = function(){
+
+let name=document.getElementById("name").value;
+let email=document.getElementById("email").value;
+let date=document.getElementById("date").value;
+
+push(ref(db,"consultations"),{
+name:name,
+email:email,
+date:date
+});
+
+document.getElementById("msg").innerHTML="Consultation Registered!";
+}
+
+</script>
+
+</body>
+  </html>
